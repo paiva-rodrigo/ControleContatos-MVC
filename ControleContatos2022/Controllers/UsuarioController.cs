@@ -38,7 +38,7 @@ namespace ControleContatos2022.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _usuarioRepositorio.Adicionar(usuario);
+                    usuario = _usuarioRepositorio.Adicionar(usuario);
                     TempData["MensagemSucesso"] = "usuario cadastrado com sucesso";
                     return RedirectToAction("Index");//Redirecionando para a pagina index
                 }

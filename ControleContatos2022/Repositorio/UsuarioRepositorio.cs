@@ -41,6 +41,7 @@ namespace ControleContatos2022.Repositorio
         {
             //inserção no banco de dados
             usuario.DataCadastro = DateTime.Now;
+            usuario.SetSenhaHash();
             _bancoContext.Usuarios.Add(usuario);
             _bancoContext.SaveChanges();
             return usuario;
@@ -63,5 +64,9 @@ namespace ControleContatos2022.Repositorio
              return _bancoContext.Usuarios.FirstOrDefault(x => x.Login.ToUpper() == Login.ToUpper());
         }
 
+        public UsuarioModel BuscarPorEmailELogin(string email, string Login)
+        {
+            return _bancoContext.Usuarios.FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper() && x.Login.ToUpper() == Login.ToUpper());
+        }
     }
 }

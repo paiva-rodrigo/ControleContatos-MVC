@@ -1,4 +1,5 @@
 ﻿using ControleContatos2022.Enum;
+using ControleContatos2022.Helper;
 using System.ComponentModel.DataAnnotations;
 
 namespace ControleContatos2022.Models
@@ -28,7 +29,20 @@ namespace ControleContatos2022.Models
 
       public bool SenhaValida(string senha)
         {
-            return Senha == senha;
+            //converter para criptografia
+            return Senha == senha.GerarHash();
+        }
+
+      public void SetSenhaHash()
+        {
+            Senha = Senha.GerarHash();
+        }
+
+      public string GerarNovaSenha()
+        {
+            string novaSenha = Guid.NewGuid().ToString().Substring(0, 8);
+            Senha = novaSenha.GerarHash();
+            return novaSenha;
         }
     }
 }
