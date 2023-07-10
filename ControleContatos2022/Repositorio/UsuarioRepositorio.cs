@@ -1,5 +1,6 @@
 ﻿using ControleContatos2022.Data;
 using ControleContatos2022.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControleContatos2022.Repositorio
 {
@@ -67,6 +68,27 @@ namespace ControleContatos2022.Repositorio
         public UsuarioModel BuscarPorEmailELogin(string email, string Login)
         {
             return _bancoContext.Usuarios.FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper() && x.Login.ToUpper() == Login.ToUpper());
+        }
+
+        public UsuarioModel BuscarPorID(int id)
+        {
+            return _bancoContext.Usuarios.FirstOrDefault(x => x.Id == id);
+        }
+        public UsuarioModel AlterarSenha(AlterarSenhaModel alterarSenhaModel)
+        {
+            UsuarioModel usuarioDB = BuscarPorID(alterarSenhaModel.Id);
+            if (usuarioDB == null) throw new Exception("Houve um erro na atualização da senha, usuario não encontrado");
+        
+            if(!usuarioDB.SenhaValida(alterarSenhaModel.SenhaAtual)) throw new Exception("Senha atual não confere");
+
+            if(usuarioDB.SenhaValida(alterarSenhaModel.NovaSenha)) throw new Exception("Snova senha tem que ser diferente da atual");
+       
+            usuarioDB.SetNovaSenha(alterarSenhaModel.NovaSenha);
+            usuarioDB.DataAtualizacao = DateTime.Now;
+
+            _bancoContext.Usuarios.Update(usuarioDB);
+            _bancoContext.SaveChanges();
+            return usuarioDB;
         }
     }
 }

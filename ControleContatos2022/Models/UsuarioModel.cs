@@ -44,5 +44,9 @@ namespace ControleContatos2022.Models
             Senha = novaSenha.GerarHash();
             return novaSenha;
         }
+        public void SetNovaSenha(string novaSenha)
+        {
+            Senha = Senha.GerarHash();
+        }
     }
 }

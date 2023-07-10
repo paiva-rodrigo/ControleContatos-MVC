@@ -10,7 +10,6 @@ namespace ControleContatos2022.Repositorio
         public ContatoRepositorio(BancoContext bancoContext)
         {
             this._bancoContext = bancoContext;
-
         }
 
         public ContatoModel Atualizar(ContatoModel contato)
